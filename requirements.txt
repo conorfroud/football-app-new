@@ -1,0 +1,10 @@
+highlight_text
+matplotlib
+pandas==1.5.3
+plotly
+scipy
+streamlit==1.36.0
+mplsoccer
+scikit-learn
+numpy==1.24.3
+st-gsheets-connection
