@@ -2736,7 +2736,6 @@ def team_rolling_averages_new(data1):
 
     # Plot Attacking Metrics
     if metric_group == 'Attacking Metrics':
-        st.header("Attacking Metrics")
         
         fig_xg_for = create_visualization(data1, 'xG For', team, window, **thresholds['xG For'])
         st.pyplot(fig_xg_for)
@@ -2746,7 +2745,6 @@ def team_rolling_averages_new(data1):
 
     # Plot Defensive Metrics
     elif metric_group == 'Defensive Metrics':
-        st.header("Defensive Metrics")
         
         fig_xg_against = create_visualization(data1, 'xG Against', team, window, **thresholds['xG Against'])
         st.pyplot(fig_xg_against)
