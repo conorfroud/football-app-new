@@ -2682,12 +2682,12 @@ def team_rolling_averages(data):
 def team_rolling_averages_new(data1):
 
     window = 5  # Define your rolling window size
-    team = 'Your Team Name'  # Replace with your team name
+    team = 'Stoke City'  # Replace with your team name
 
     # Define thresholds for each metric
     thresholds = {
         'xG For': {'green_threshold': 1.15, 'orange_threshold': 1.05},
-        'xG Per Shot For': {'green_threshold': 0.95, 'orange_threshold': 0.85},
+        'xG Per Shot For': {'green_threshold': 0.20, 'orange_threshold': 0.15},
         'xG Against': {'green_threshold': 1.0, 'orange_threshold': 1.2}
     }
 
@@ -2760,7 +2760,7 @@ data = pd.read_csv("seasonmatchdata2024.csv")
 data1 = pd.read_csv("Stoke City Performance Data - Sheet1.csv")
 
 # Create the navigation menu in the sidebar
-selected_tab = st.sidebar.radio("Navigation", ["Team Data", "Rolling Average Data New"])
+selected_tab = st.sidebar.radio("Navigation", ["Team Data", "Rolling Average Data"])
 
 # Based on the selected tab, display the corresponding content
 if selected_tab == "Stoke Score":
@@ -2789,9 +2789,9 @@ if selected_tab == "Player Database":
     scouting_data()
 if selected_tab == "Team Data":
     team_scatter_plot(df4)
-if selected_tab == "Rolling Average Data":
-    team_rolling_averages(data)
 if selected_tab == "Rolling Average Data New":
+    team_rolling_averages(data)
+if selected_tab == "Rolling Average Data":
     team_rolling_averages_new(data1)
 elif selected_tab == "Multi Player Comparison Tab":
     comparison_tab(df)
