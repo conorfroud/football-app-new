@@ -2707,7 +2707,7 @@ def team_rolling_averages_new(data1):
 
         ax.bar(x_pos, df[metric], color='black', alpha=0.75)
         ax.set_xticks(range(len(df)))
-        ax.set_xticklabels(df['game_week'], rotation=90)
+        ax.set_xticklabels(df['Opponent'], rotation=90)
         ax.plot(rolling, lw=3, color='red', markersize=5, zorder=10, label=f"{window} match rolling average")
         ax.grid(ls='dotted', lw=0.5, color='Black', zorder=1, alpha=0.4)
 
