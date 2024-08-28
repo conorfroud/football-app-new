@@ -2741,9 +2741,10 @@ df2 = pd.read_csv("championshipscores.csv")
 df3 = pd.read_csv("nonpriorityleaguesdata.csv")
 df4 = pd.read_csv("teamseasondata.csv")
 data = pd.read_csv("seasonmatchdata2024.csv")
+data1 = pd.read_csv("Stoke City Performance Data - Sheet1.csv")
 
 # Create the navigation menu in the sidebar
-selected_tab = st.sidebar.radio("Navigation", ["Team Data", "Rolling Average Data"])
+selected_tab = st.sidebar.radio("Navigation", ["Team Data", "Rolling Average Data", "Rolling Average Data New"])
 
 # Based on the selected tab, display the corresponding content
 if selected_tab == "Stoke Score":
@@ -2774,5 +2775,7 @@ if selected_tab == "Team Data":
     team_scatter_plot(df4)
 if selected_tab == "Rolling Average Data":
     team_rolling_averages(data)
+if selected_tab == "Rolling Average Data New":
+    team_rolling_averages_new(data1)
 elif selected_tab == "Multi Player Comparison Tab":
     comparison_tab(df)
