@@ -2682,12 +2682,13 @@ def team_rolling_averages(data):
 def team_rolling_averages_new(data1):
 
     window = 5  # Define your rolling window size
-    team = 'Stoke City'  # Replace with your team name
+    team = 'Your Team Name'  # Replace with your team name
 
     # Define thresholds for each metric
     thresholds = {
         'xG For': {'green_threshold': 1.15, 'orange_threshold': 1.05},
-        'xG Per Shot For': {'green_threshold': 0.20, 'orange_threshold': 0.15}
+        'xG Per Shot For': {'green_threshold': 0.95, 'orange_threshold': 0.85},
+        'xG Against': {'green_threshold': 1.0, 'orange_threshold': 1.2}
     }
 
     # Function to create the visualization
@@ -2707,7 +2708,7 @@ def team_rolling_averages_new(data1):
 
         ax.bar(x_pos, df[metric], color='black', alpha=0.75)
         ax.set_xticks(range(len(df)))
-        ax.set_xticklabels(df['Opponent'], rotation=90)
+        ax.set_xticklabels(df['game_week'], rotation=90)
         ax.plot(rolling, lw=3, color='red', markersize=5, zorder=10, label=f"{window} match rolling average")
         ax.grid(ls='dotted', lw=0.5, color='Black', zorder=1, alpha=0.4)
 
@@ -2726,15 +2727,30 @@ def team_rolling_averages_new(data1):
         # Return the figure to be used in Streamlit
         return fig
 
-    # Create the plot for xG For and display it in Streamlit
-    fig_xg_for = create_visualization(data1, 'xG For', team, window, **thresholds['xG For'])
-    st.pyplot(fig_xg_for)
+    # Sidebar for metric selection
+    st.sidebar.title('Select Metric Group')
+    metric_group = st.sidebar.selectbox(
+        'Which group of metrics would you like to view?',
+        ('Attacking Metrics', 'Defensive Metrics')
+    )
 
-    # Create the plot for xG Per Shot For and display it in Streamlit
-    fig_xg_per_shot_for = create_visualization(data1, 'xG Per Shot For', team, window, **thresholds['xG Per Shot For'])
-    st.pyplot(fig_xg_per_shot_for)
+    # Plot Attacking Metrics
+    if metric_group == 'Attacking Metrics':
+        st.header("Attacking Metrics")
+        
+        fig_xg_for = create_visualization(data1, 'xG For', team, window, **thresholds['xG For'])
+        st.pyplot(fig_xg_for)
 
-            
+        fig_xg_per_shot_for = create_visualization(data1, 'xG Per Shot For', team, window, **thresholds['xG Per Shot For'])
+        st.pyplot(fig_xg_per_shot_for)
+
+    # Plot Defensive Metrics
+    elif metric_group == 'Defensive Metrics':
+        st.header("Defensive Metrics")
+        
+        fig_xg_against = create_visualization(data1, 'xG Against', team, window, **thresholds['xG Against'])
+        st.pyplot(fig_xg_against)
+       
 # Load the DataFrame
 df = pd.read_csv("belgiumdata.csv")
 df2 = pd.read_csv("championshipscores.csv")
