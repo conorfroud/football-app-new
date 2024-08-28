@@ -2682,7 +2682,7 @@ def team_rolling_averages(data):
 def team_rolling_averages_new(data1):
 
     window = 5  # Define your rolling window size
-    team = 'Your Team Name'  # Replace with your team name
+    team = 'Stoke City'  # Replace with your team name
 
     # Define thresholds for each metric
     thresholds = {
