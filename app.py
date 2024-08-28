@@ -2744,7 +2744,7 @@ data = pd.read_csv("seasonmatchdata2024.csv")
 data1 = pd.read_csv("Stoke City Performance Data - Sheet1.csv")
 
 # Create the navigation menu in the sidebar
-selected_tab = st.sidebar.radio("Navigation", ["Team Data", "Rolling Average Data", "Rolling Average Data New"])
+selected_tab = st.sidebar.radio("Navigation", ["Team Data", "Rolling Average Data New"])
 
 # Based on the selected tab, display the corresponding content
 if selected_tab == "Stoke Score":
