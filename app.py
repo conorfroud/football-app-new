@@ -2678,6 +2678,62 @@ def team_rolling_averages(data):
             df = df[df["team_name" if is_opponent else "opponent"] != team].reset_index(drop=True)
             metric_thresholds = thresholds[metric_type].get(metric, {'green_threshold': 1.2, 'orange_threshold': 1.05})
             create_visualization(df, metric, team, window, "Against trendline" if is_opponent else "For trendline", vline_xpos=15, is_opponent=is_opponent, **metric_thresholds)
+
+def team_rolling_averages_new(data1):
+
+    window = 5  # Define your rolling window size
+    team = 'Your Team Name'  # Replace with your team name
+
+    # Define thresholds for each metric
+    thresholds = {
+        'xG For': {'green_threshold': 1.15, 'orange_threshold': 1.05},
+        'xG Per Shot For': {'green_threshold': 0.20, 'orange_threshold': 0.15}
+    }
+
+    # Function to create the visualization
+    def create_visualization(df, metric, team, window, green_threshold=1.2, orange_threshold=1.05):
+        rolling = df[metric].rolling(window).mean()
+
+        fig, ax = plt.subplots(figsize=(12, 6))
+        fig.set_facecolor('White')
+        ax.patch.set_facecolor('White')
+
+        ax.spines['right'].set_visible(False)
+        ax.spines['top'].set_visible(False)
+        ax.spines['left'].set_color('#ccc8c8')
+        ax.spines['bottom'].set_color('#ccc8c8')
+
+        x_pos = np.arange(len(df))
+
+        ax.bar(x_pos, df[metric], color='black', alpha=0.75)
+        ax.set_xticks(range(len(df)))
+        ax.set_xticklabels(df['game_week'], rotation=90)
+        ax.plot(rolling, lw=3, color='red', markersize=5, zorder=10, label=f"{window} match rolling average")
+        ax.grid(ls='dotted', lw=0.5, color='Black', zorder=1, alpha=0.4)
+
+        # Adding x and y axis labels
+        ax.set_xlabel('Games', fontsize=12, color='Black')
+        ax.set_ylabel(metric, fontsize=12, color='Black')
+
+        # Highlight areas based on custom thresholds
+        ax.axhspan(green_threshold, df[metric].max(), facecolor='green', alpha=0.1)
+        ax.axhspan(orange_threshold, green_threshold, facecolor='orange', alpha=0.1)
+        ax.axhspan(0, orange_threshold, facecolor='red', alpha=0.1)
+
+        # Title
+        fig.suptitle(f"{team} {metric} | Trendline", color='Black', family="Roboto", fontsize=20, fontweight="bold", x=0.52, y=0.96)
+
+        # Return the figure to be used in Streamlit
+        return fig
+
+    # Create the plot for xG For and display it in Streamlit
+    fig_xg_for = create_visualization(data1, 'xG For', team, window, **thresholds['xG For'])
+    st.pyplot(fig_xg_for)
+
+    # Create the plot for xG Per Shot For and display it in Streamlit
+    fig_xg_per_shot_for = create_visualization(data1, 'xG Per Shot For', team, window, **thresholds['xG Per Shot For'])
+    st.pyplot(fig_xg_per_shot_for)
+
             
 # Load the DataFrame
 df = pd.read_csv("belgiumdata.csv")
