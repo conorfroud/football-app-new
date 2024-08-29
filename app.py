@@ -2689,7 +2689,8 @@ def team_rolling_averages_new(data1):
         'xG For': {'green_threshold': 1.15, 'orange_threshold': 1.05},
         'xG Per Shot For': {'green_threshold': 0.20, 'orange_threshold': 0.15},
         'xG Against': {'green_threshold': 1.0, 'orange_threshold': 1.2},
-        'Shots For': {'green_threshold': 15, 'orange_threshold': 10}  # Add thresholds for 'Shots For'
+        'Shots For': {'green_threshold': 15, 'orange_threshold': 10},  # Thresholds for 'Shots For'
+        'Clear Shots For': {'green_threshold': 5, 'orange_threshold': 3}  # Thresholds for 'Clear Shots For'
     }
 
     # Function to create the visualization
@@ -2744,8 +2745,11 @@ def team_rolling_averages_new(data1):
         fig_xg_per_shot_for = create_visualization(data1, 'xG Per Shot For', team, window, **thresholds['xG Per Shot For'])
         st.pyplot(fig_xg_per_shot_for)
 
-        fig_shots_for = create_visualization(data1, 'Shots For', team, window, **thresholds['Shots For'])  # Add this line
+        fig_shots_for = create_visualization(data1, 'Shots For', team, window, **thresholds['Shots For'])
         st.pyplot(fig_shots_for)
+
+        fig_clear_shots_for = create_visualization(data1, 'Clear Shots For', team, window, **thresholds['Clear Shots For'])  # Add this line
+        st.pyplot(fig_clear_shots_for)
 
     # Plot Defensive Metrics
     elif metric_group == 'Defensive Metrics':
