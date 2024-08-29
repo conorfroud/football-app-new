@@ -2691,13 +2691,13 @@ def team_rolling_averages_new(data1):
         'xG Against': {'green_threshold': 1.0, 'orange_threshold': 1.2},
         'Shots For': {'green_threshold': 15, 'orange_threshold': 10},
         'Clear Shots For': {'green_threshold': 5, 'orange_threshold': 3},
-        'xG Per Shot Against': {'green_threshold': 0.2, 'orange_threshold': 0.15},  # New metric
-        'Shots Against': {'green_threshold': 15, 'orange_threshold': 10},  # New metric
-        'Clear Shots Against': {'green_threshold': 3, 'orange_threshold': 5}  # New metric
+        'xG Per Shot Against': {'green_threshold': 0.1, 'orange_threshold': 0.15},
+        'Shots Against': {'green_threshold': 10, 'orange_threshold': 15},
+        'Clear Shots Against': {'green_threshold': 3, 'orange_threshold': 5}
     }
 
     # Function to create the visualization
-    def create_visualization(df, metric, team, window, green_threshold=1.2, orange_threshold=1.05):
+    def create_visualization(df, metric, team, window, green_threshold=1.2, orange_threshold=1.05, flip_colors=False):
         rolling = df[metric].rolling(window).mean()
 
         fig, ax = plt.subplots(figsize=(12, 6))
@@ -2722,9 +2722,14 @@ def team_rolling_averages_new(data1):
         ax.set_ylabel(metric, fontsize=12, color='Black')
 
         # Highlight areas based on custom thresholds
-        ax.axhspan(green_threshold, df[metric].max(), facecolor='green', alpha=0.1)
-        ax.axhspan(orange_threshold, green_threshold, facecolor='orange', alpha=0.1)
-        ax.axhspan(0, orange_threshold, facecolor='red', alpha=0.1)
+        if flip_colors:
+            ax.axhspan(green_threshold, df[metric].max(), facecolor='red', alpha=0.1)   # Red on top
+            ax.axhspan(orange_threshold, green_threshold, facecolor='orange', alpha=0.1)  # Orange in middle
+            ax.axhspan(0, orange_threshold, facecolor='green', alpha=0.1)  # Green on bottom
+        else:
+            ax.axhspan(green_threshold, df[metric].max(), facecolor='green', alpha=0.1)  # Green on top
+            ax.axhspan(orange_threshold, green_threshold, facecolor='orange', alpha=0.1)  # Orange in middle
+            ax.axhspan(0, orange_threshold, facecolor='red', alpha=0.1)  # Red on bottom
 
         # Title
         fig.suptitle(f"{team} {metric} | Trendline", color='Black', family="Roboto", fontsize=20, fontweight="bold", x=0.52, y=0.96)
@@ -2757,18 +2762,18 @@ def team_rolling_averages_new(data1):
     # Plot Defensive Metrics
     elif metric_group == 'Defensive Metrics':
         
-        fig_xg_against = create_visualization(data1, 'xG Against', team, window, **thresholds['xG Against'])
+        fig_xg_against = create_visualization(data1, 'xG Against', team, window, **thresholds['xG Against'], flip_colors=True)
         st.pyplot(fig_xg_against)
 
-        fig_xg_per_shot_against = create_visualization(data1, 'xG Per Shot Against', team, window, **thresholds['xG Per Shot Against'])  # Add this line
+        fig_xg_per_shot_against = create_visualization(data1, 'xG Per Shot Against', team, window, **thresholds['xG Per Shot Against'], flip_colors=True)
         st.pyplot(fig_xg_per_shot_against)
 
-        fig_shots_against = create_visualization(data1, 'Shots Against', team, window, **thresholds['Shots Against'])  # Add this line
+        fig_shots_against = create_visualization(data1, 'Shots Against', team, window, **thresholds['Shots Against'], flip_colors=True)
         st.pyplot(fig_shots_against)
 
-        fig_clear_shots_against = create_visualization(data1, 'Clear Shots Against', team, window, **thresholds['Clear Shots Against'])  # Add this line
+        fig_clear_shots_against = create_visualization(data1, 'Clear Shots Against', team, window, **thresholds['Clear Shots Against'], flip_colors=True)
         st.pyplot(fig_clear_shots_against)
-       
+    
 # Load the DataFrame
 df = pd.read_csv("belgiumdata.csv")
 df2 = pd.read_csv("championshipscores.csv")
