@@ -2803,10 +2803,10 @@ def team_rolling_averages_new(data1):
         fig_deep_progressions_against = create_visualization(data1, 'Deep Progressions Against', team, window, **thresholds['Deep Progressions Against'], flip_colors=True)
         st.pyplot(fig_deep_progressions_against)
 
-        fig_pressures_opp_half = create_visualization(data1, '% of Pressures Opp Half', team, window, **thresholds['% of Pressures Opp Half'], flip_colors=True)
+        fig_pressures_opp_half = create_visualization(data1, '% of Pressures Opp Half', team, window, **thresholds['% of Pressures Opp Half'], flip_colors=False)
         st.pyplot(fig_pressures_opp_half)
 
-        fig_defensive_distance = create_visualization(data1, 'Defensive Distance', team, window, **thresholds['Defensive Distance'], flip_colors=True)
+        fig_defensive_distance = create_visualization(data1, 'Defensive Distance', team, window, **thresholds['Defensive Distance'], flip_colors=False)
         st.pyplot(fig_defensive_distance)
 
         fig_high_press_shots_against = create_visualization(data1, 'High Press Shots Against', team, window, **thresholds['High Press Shots Against'], flip_colors=True)
