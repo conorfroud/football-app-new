@@ -2691,8 +2691,8 @@ def team_rolling_averages_new(data1):
         'xG Against': {'green_threshold': 1.0, 'orange_threshold': 1.2},
         'Shots For': {'green_threshold': 15, 'orange_threshold': 10},
         'Clear Shots For': {'green_threshold': 5, 'orange_threshold': 3},
-        'xG Per Shot Against': {'green_threshold': 0.1, 'orange_threshold': 0.15},  # New metric
-        'Shots Against': {'green_threshold': 10, 'orange_threshold': 15},  # New metric
+        'xG Per Shot Against': {'green_threshold': 0.2, 'orange_threshold': 0.15},  # New metric
+        'Shots Against': {'green_threshold': 15, 'orange_threshold': 10},  # New metric
         'Clear Shots Against': {'green_threshold': 3, 'orange_threshold': 5}  # New metric
     }
 
