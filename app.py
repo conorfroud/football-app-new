@@ -2694,14 +2694,14 @@ def team_rolling_averages_new(data1):
         'xG Per Shot Against': {'green_threshold': 0.1, 'orange_threshold': 0.15},
         'Shots Against': {'green_threshold': 10, 'orange_threshold': 15},
         'Clear Shots Against': {'green_threshold': 3, 'orange_threshold': 5},
-        'Deep Progressions For': {'green_threshold': 10, 'orange_threshold': 7},  # In Possession Metrics
-        'Deep Completions For': {'green_threshold': 6, 'orange_threshold': 4},  # In Possession Metrics
-        'Pass OBV For': {'green_threshold': 0.25, 'orange_threshold': 0.15},  # In Possession Metrics
-        'Box Cross %': {'green_threshold': 30, 'orange_threshold': 20},  # In Possession Metrics
-        'Deep Progressions Against': {'green_threshold': 7, 'orange_threshold': 10},  # Out of Possession Metrics
-        '% of Pressures Opp Half': {'green_threshold': 30, 'orange_threshold': 20},  # Out of Possession Metrics (percentages)
+        'Deep Progressions For': {'green_threshold': 44, 'orange_threshold': 40},  # In Possession Metrics
+        'Deep Completions For': {'green_threshold': 4.6, 'orange_threshold': 4.1},  # In Possession Metrics
+        'Pass OBV For': {'green_threshold': 0.9, 'orange_threshold': 0.8},  # In Possession Metrics
+        'Box Cross %': {'green_threshold': 35, 'orange_threshold': 30},  # In Possession Metrics
+        'Deep Progressions Against': {'green_threshold': 36, 'orange_threshold': 40},  # Out of Possession Metrics
+        '% of Pressures Opp Half': {'green_threshold': 45, 'orange_threshold': 40},  # Out of Possession Metrics (percentages)
         'Defensive Distance': {'green_threshold': 45, 'orange_threshold': 40},  # Out of Possession Metrics
-        'High Press Shots Against': {'green_threshold': 2, 'orange_threshold': 4}  # Out of Possession Metrics
+        'High Press Shots Against': {'green_threshold': 2, 'orange_threshold': 2.4}  # Out of Possession Metrics
     }
 
     # Function to create the visualization
