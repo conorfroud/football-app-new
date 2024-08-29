@@ -2687,10 +2687,10 @@ def team_rolling_averages_new(data1):
     # Define thresholds for each metric
     thresholds = {
         'xG For': {'green_threshold': 1.15, 'orange_threshold': 1.05},
-        'xG Per Shot For': {'green_threshold': 0.20, 'orange_threshold': 0.15},
+        'xG Per Shot For': {'green_threshold': 0.095, 'orange_threshold': 0.085},
         'xG Against': {'green_threshold': 1.0, 'orange_threshold': 1.2},
-        'Shots For': {'green_threshold': 15, 'orange_threshold': 10},
-        'Clear Shots For': {'green_threshold': 5, 'orange_threshold': 3},
+        'Shots For': {'green_threshold': 12.2, 'orange_threshold': 11},
+        'Clear Shots For': {'green_threshold': 1.9, 'orange_threshold': 1.7},
         'xG Per Shot Against': {'green_threshold': 0.1, 'orange_threshold': 0.15},
         'Shots Against': {'green_threshold': 10, 'orange_threshold': 15},
         'Clear Shots Against': {'green_threshold': 3, 'orange_threshold': 5},
