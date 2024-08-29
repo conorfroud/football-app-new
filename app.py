@@ -1909,7 +1909,18 @@ def team_scatter_plot(df4):
         fig1.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
 
         # Set the plot size, title, and reverse the y-axis for 'xG Conceded'
-        fig1.update_layout(yaxis=dict(autorange='reversed'), width=800, height=600, title="xG Performance")
+        fig1.update_layout(
+            yaxis=dict(autorange='reversed'),
+            width=800,
+            height=600,
+            title={
+                'text': "xG Performance",
+                'x': 0.5,
+                'xanchor': 'center',
+                'yanchor': 'top',
+                'font': dict(family="Roboto", size=20, color='black')
+            }
+        )
 
         # Add mean lines
         fig1 = add_mean_lines(fig1, x_mean, y_mean, 'xG', 'xG Conceded')
@@ -1939,7 +1950,18 @@ def team_scatter_plot(df4):
         fig2.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
 
         # Set the plot size and title
-        fig2.update_layout(width=800, height=600, title="Goals Performance", yaxis=dict(autorange="reversed"))
+        fig2.update_layout(
+            width=800,
+            height=600,
+            title={
+                'text': "Goals Performance",
+                'x': 0.5,
+                'xanchor': 'center',
+                'yanchor': 'top',
+                'font': dict(family="Roboto", size=20, color='black')
+            },
+            yaxis=dict(autorange="reversed")
+        )
 
         # Add mean lines
         fig2 = add_mean_lines(fig2, x_mean, y_mean, 'Non-Penalty Goals Scored', 'Non-Penalty Goals Conceded')
@@ -1967,7 +1989,17 @@ def team_scatter_plot(df4):
         fig3.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
 
         # Set the plot size and title
-        fig3.update_layout(width=800, height=600, title="Attacking Over/Under Performance")
+        fig3.update_layout(
+            width=800,
+            height=600,
+            title={
+                'text': "Attacking Over/Under Performance",
+                'x': 0.5,
+                'xanchor': 'center',
+                'yanchor': 'top',
+                'font': dict(family="Roboto", size=20, color='black')
+            }
+        )
 
         # Add a y=x line
         fig3.add_trace(
@@ -2003,7 +2035,19 @@ def team_scatter_plot(df4):
         fig4.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
 
         # Set the plot size and title
-        fig4.update_layout(width=800, height=600, title="Defensive Over/Under Performance", yaxis=dict(autorange="reversed"), xaxis=dict(autorange="reversed"))
+        fig4.update_layout(
+            width=800,
+            height=600,
+            title={
+                'text': "Defensive Over/Under Performance",
+                'x': 0.5,
+                'xanchor': 'center',
+                'yanchor': 'top',
+                'font': dict(family="Roboto", size=20, color='black')
+            },
+            yaxis=dict(autorange="reversed"),
+            xaxis=dict(autorange="reversed")
+        )
 
         # Add a y=x line
         fig4.add_trace(
@@ -2041,7 +2085,18 @@ def team_scatter_plot(df4):
         fig5.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
 
         # Set the plot size and title
-        fig5.update_layout(width=800, height=600, title="Build-Up Style", yaxis=dict(autorange="reversed"))
+        fig5.update_layout(
+            width=800,
+            height=600,
+            title={
+                'text': "Build-Up Style",
+                'x': 0.5,
+                'xanchor': 'center',
+                'yanchor': 'top',
+                'font': dict(family="Roboto", size=20, color='black')
+            },
+            yaxis=dict(autorange="reversed")
+        )
 
         # Add mean lines
         fig5 = add_mean_lines(fig5, x_mean, y_mean, 'Passes Per Possession', 'Pace Towards Goal')
@@ -2071,7 +2126,18 @@ def team_scatter_plot(df4):
         fig6.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
 
         # Set the plot size and title
-        fig6.update_layout(width=800, height=600, title="Pressing", xaxis=dict(autorange="reversed"))
+        fig6.update_layout(
+            width=800,
+            height=600,
+            title={
+                'text': "Pressing",
+                'x': 0.5,
+                'xanchor': 'center',
+                'yanchor': 'top',
+                'font': dict(family="Roboto", size=20, color='black')
+            },
+            xaxis=dict(autorange="reversed")
+        )
 
         # Add mean lines
         fig6 = add_mean_lines(fig6, x_mean, y_mean, 'Passes Per Defensive Action', 'Defensive Distance')
