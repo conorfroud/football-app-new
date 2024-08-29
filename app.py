@@ -2693,7 +2693,11 @@ def team_rolling_averages_new(data1):
         'Clear Shots For': {'green_threshold': 5, 'orange_threshold': 3},
         'xG Per Shot Against': {'green_threshold': 0.1, 'orange_threshold': 0.15},
         'Shots Against': {'green_threshold': 10, 'orange_threshold': 15},
-        'Clear Shots Against': {'green_threshold': 1.8, 'orange_threshold': 2}
+        'Clear Shots Against': {'green_threshold': 3, 'orange_threshold': 5},
+        'Deep Progressions For': {'green_threshold': 10, 'orange_threshold': 7},  # New metric
+        'Deep Completions For': {'green_threshold': 6, 'orange_threshold': 4},  # New metric
+        'Pass OBV For': {'green_threshold': 0.25, 'orange_threshold': 0.15},  # New metric
+        'Box Cross %': {'green_threshold': 30, 'orange_threshold': 20}  # New metric (percentages)
     }
 
     # Function to create the visualization
@@ -2741,7 +2745,7 @@ def team_rolling_averages_new(data1):
     st.sidebar.title('Select Metric Group')
     metric_group = st.sidebar.selectbox(
         'Which group of metrics would you like to view?',
-        ('Attacking Metrics', 'Defensive Metrics')
+        ('Attacking Metrics', 'Defensive Metrics', 'In Possession Metrics')  # Added 'In Possession Metrics'
     )
 
     # Plot Attacking Metrics
@@ -2773,6 +2777,21 @@ def team_rolling_averages_new(data1):
 
         fig_clear_shots_against = create_visualization(data1, 'Clear Shots Against', team, window, **thresholds['Clear Shots Against'], flip_colors=True)
         st.pyplot(fig_clear_shots_against)
+
+    # Plot In Possession Metrics
+    elif metric_group == 'In Possession Metrics':  # New section for In Possession Metrics
+
+        fig_deep_progressions_for = create_visualization(data1, 'Deep Progressions For', team, window, **thresholds['Deep Progressions For'])
+        st.pyplot(fig_deep_progressions_for)
+
+        fig_deep_completions_for = create_visualization(data1, 'Deep Completions For', team, window, **thresholds['Deep Completions For'])
+        st.pyplot(fig_deep_completions_for)
+
+        fig_pass_obv_for = create_visualization(data1, 'Pass OBV For', team, window, **thresholds['Pass OBV For'])
+        st.pyplot(fig_pass_obv_for)
+
+        fig_box_cross_pct = create_visualization(data1, 'Box Cross %', team, window, **thresholds['Box Cross %'])
+        st.pyplot(fig_box_cross_pct)
     
 # Load the DataFrame
 df = pd.read_csv("belgiumdata.csv")
