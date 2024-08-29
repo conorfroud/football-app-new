@@ -382,7 +382,7 @@ def team_rolling_averages_new(data1):
             ax.axhspan(orange_threshold, green_threshold, facecolor='orange', alpha=0.1)  # Orange in middle
             ax.axhspan(0, orange_threshold, facecolor='red', alpha=0.1)  # Red on bottom
 
-        fig.suptitle(f"{team} {metric} | Trendline", color='Black', family="Roboto", fontsize=16, fontweight="bold", x=0.52, y=0.96)
+        fig.suptitle(f"{team} {metric} | Trendline", color='Black', family="Roboto", fontsize=18, fontweight="bold", x=0.52, y=0.96)
 
         return fig
 
