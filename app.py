@@ -2694,10 +2694,14 @@ def team_rolling_averages_new(data1):
         'xG Per Shot Against': {'green_threshold': 0.1, 'orange_threshold': 0.15},
         'Shots Against': {'green_threshold': 10, 'orange_threshold': 15},
         'Clear Shots Against': {'green_threshold': 3, 'orange_threshold': 5},
-        'Deep Progressions For': {'green_threshold': 10, 'orange_threshold': 7},  # New metric
-        'Deep Completions For': {'green_threshold': 6, 'orange_threshold': 4},  # New metric
-        'Pass OBV For': {'green_threshold': 0.25, 'orange_threshold': 0.15},  # New metric
-        'Box Cross %': {'green_threshold': 30, 'orange_threshold': 20}  # New metric (percentages)
+        'Deep Progressions For': {'green_threshold': 10, 'orange_threshold': 7},  # In Possession Metrics
+        'Deep Completions For': {'green_threshold': 6, 'orange_threshold': 4},  # In Possession Metrics
+        'Pass OBV For': {'green_threshold': 0.25, 'orange_threshold': 0.15},  # In Possession Metrics
+        'Box Cross %': {'green_threshold': 30, 'orange_threshold': 20},  # In Possession Metrics
+        'Deep Progressions Against': {'green_threshold': 7, 'orange_threshold': 10},  # Out of Possession Metrics
+        '% of Pressures Opp Half': {'green_threshold': 30, 'orange_threshold': 20},  # Out of Possession Metrics (percentages)
+        'Defensive Distance': {'green_threshold': 45, 'orange_threshold': 40},  # Out of Possession Metrics
+        'High Press Shots Against': {'green_threshold': 2, 'orange_threshold': 4}  # Out of Possession Metrics
     }
 
     # Function to create the visualization
@@ -2745,7 +2749,7 @@ def team_rolling_averages_new(data1):
     st.sidebar.title('Select Metric Group')
     metric_group = st.sidebar.selectbox(
         'Which group of metrics would you like to view?',
-        ('Attacking Metrics', 'Defensive Metrics', 'In Possession Metrics')  # Added 'In Possession Metrics'
+        ('Attacking Metrics', 'Defensive Metrics', 'In Possession Metrics', 'Out of Possession Metrics')  # Added 'Out of Possession Metrics'
     )
 
     # Plot Attacking Metrics
@@ -2792,6 +2796,21 @@ def team_rolling_averages_new(data1):
 
         fig_box_cross_pct = create_visualization(data1, 'Box Cross %', team, window, **thresholds['Box Cross %'])
         st.pyplot(fig_box_cross_pct)
+
+    # Plot Out of Possession Metrics
+    elif metric_group == 'Out of Possession Metrics':  # New section for Out of Possession Metrics
+
+        fig_deep_progressions_against = create_visualization(data1, 'Deep Progressions Against', team, window, **thresholds['Deep Progressions Against'], flip_colors=True)
+        st.pyplot(fig_deep_progressions_against)
+
+        fig_pressures_opp_half = create_visualization(data1, '% of Pressures Opp Half', team, window, **thresholds['% of Pressures Opp Half'], flip_colors=True)
+        st.pyplot(fig_pressures_opp_half)
+
+        fig_defensive_distance = create_visualization(data1, 'Defensive Distance', team, window, **thresholds['Defensive Distance'], flip_colors=True)
+        st.pyplot(fig_defensive_distance)
+
+        fig_high_press_shots_against = create_visualization(data1, 'High Press Shots Against', team, window, **thresholds['High Press Shots Against'], flip_colors=True)
+        st.pyplot(fig_high_press_shots_against)
     
 # Load the DataFrame
 df = pd.read_csv("belgiumdata.csv")
