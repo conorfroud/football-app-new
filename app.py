@@ -2689,8 +2689,11 @@ def team_rolling_averages_new(data1):
         'xG For': {'green_threshold': 1.15, 'orange_threshold': 1.05},
         'xG Per Shot For': {'green_threshold': 0.20, 'orange_threshold': 0.15},
         'xG Against': {'green_threshold': 1.0, 'orange_threshold': 1.2},
-        'Shots For': {'green_threshold': 15, 'orange_threshold': 10},  # Thresholds for 'Shots For'
-        'Clear Shots For': {'green_threshold': 5, 'orange_threshold': 3}  # Thresholds for 'Clear Shots For'
+        'Shots For': {'green_threshold': 15, 'orange_threshold': 10},
+        'Clear Shots For': {'green_threshold': 5, 'orange_threshold': 3},
+        'xG Per Shot Against': {'green_threshold': 0.1, 'orange_threshold': 0.15},  # New metric
+        'Shots Against': {'green_threshold': 10, 'orange_threshold': 15},  # New metric
+        'Clear Shots Against': {'green_threshold': 3, 'orange_threshold': 5}  # New metric
     }
 
     # Function to create the visualization
@@ -2748,7 +2751,7 @@ def team_rolling_averages_new(data1):
         fig_shots_for = create_visualization(data1, 'Shots For', team, window, **thresholds['Shots For'])
         st.pyplot(fig_shots_for)
 
-        fig_clear_shots_for = create_visualization(data1, 'Clear Shots For', team, window, **thresholds['Clear Shots For'])  # Add this line
+        fig_clear_shots_for = create_visualization(data1, 'Clear Shots For', team, window, **thresholds['Clear Shots For'])
         st.pyplot(fig_clear_shots_for)
 
     # Plot Defensive Metrics
@@ -2756,6 +2759,15 @@ def team_rolling_averages_new(data1):
         
         fig_xg_against = create_visualization(data1, 'xG Against', team, window, **thresholds['xG Against'])
         st.pyplot(fig_xg_against)
+
+        fig_xg_per_shot_against = create_visualization(data1, 'xG Per Shot Against', team, window, **thresholds['xG Per Shot Against'])  # Add this line
+        st.pyplot(fig_xg_per_shot_against)
+
+        fig_shots_against = create_visualization(data1, 'Shots Against', team, window, **thresholds['Shots Against'])  # Add this line
+        st.pyplot(fig_shots_against)
+
+        fig_clear_shots_against = create_visualization(data1, 'Clear Shots Against', team, window, **thresholds['Clear Shots Against'])  # Add this line
+        st.pyplot(fig_clear_shots_against)
        
 # Load the DataFrame
 df = pd.read_csv("belgiumdata.csv")
