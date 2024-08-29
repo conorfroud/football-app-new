@@ -2693,7 +2693,7 @@ def team_rolling_averages_new(data1):
         'Clear Shots For': {'green_threshold': 5, 'orange_threshold': 3},
         'xG Per Shot Against': {'green_threshold': 0.1, 'orange_threshold': 0.15},
         'Shots Against': {'green_threshold': 10, 'orange_threshold': 15},
-        'Clear Shots Against': {'green_threshold': 3, 'orange_threshold': 5}
+        'Clear Shots Against': {'green_threshold': 1.8, 'orange_threshold': 2}
     }
 
     # Function to create the visualization
