@@ -353,7 +353,7 @@ def team_rolling_averages_new(data1):
     def create_visualization(df, metric, team, window, green_threshold=1.2, orange_threshold=1.05, flip_colors=False):
            rolling = df[metric].rolling(window).mean()
 
-           fig, ax = plt.subplots(figsize=(12, 6))  # Already consistent with Plotly
+           fig, ax = plt.subplots(figsize=(10, 4))  # Already consistent with Plotly
            fig.set_facecolor('White')
            ax.patch.set_facecolor('White')
 
