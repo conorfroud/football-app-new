@@ -2276,11 +2276,11 @@ def team_scatter_plot(df4):
 
         def highlight_color(row):
             if row['team_name'] == 'Stoke City':
-                return '#FFA07A'  # light orange
+                return '#FF8080'  # light orange
             elif row['Promoted?'] == 'Yes':
                 return '#90EE90'  # light green
             elif row['Relegated?'] == 'Yes':
-                return '#FF8080'  # light red
+                return '#FFA07A'  # light red
             else:
                 return 'grey'
 
