@@ -67,45 +67,49 @@ def team_scatter_plot(df4):
             )
             return fig
 
-        # Create the first scatter plot using Plotly with the entire data
-        x_mean = df4['xG'].mean()
-        y_mean = df4['xG Conceded'].mean()
-        fig1 = px.scatter(df4, x='xG', y='xG Conceded', hover_data={'team_name': True, 'season_name': True, 'xG': True, 'xG Conceded': True}, trendline="ols")
+        # Create the scatter plot
+        # Create the scatter plot
+        fig1 = px.scatter(df4, x='xG', y='xG Conceded',
+                  hover_data={'team_name': True, 'season_name': True, 'xG': True, 'xG Conceded': True},
+                  trendline="ols")
 
         # Customize the marker color and size
         fig1.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
 
+        # Access the trendline and customize its appearance
+        fig1.data[-1].update(line=dict(color='black', dash='dot'))
+
         # Set the plot size, title, and reverse the y-axis for 'xG Conceded'
         fig1.update_layout(
-            yaxis=dict(autorange='reversed'),
-            width=800,
-            height=600,
-            title={
-                'text': "xG Performance",
-                'x': 0.5,
-                'xanchor': 'center',
-                'yanchor': 'top',
-                'font': dict(family="Roboto", size=20, color='black')
-            }
+               yaxis=dict(autorange='reversed'),
+               width=800,
+               height=600,
+               title={
+                      'text': "xG Performance",
+                      'x': 0.5,
+                      'xanchor': 'center',
+                      'yanchor': 'top',
+                      'font': dict(family="Roboto", size=20, color='black')
+               }
         )
 
         # Add mean lines
         fig1 = add_mean_lines(fig1, x_mean, y_mean, 'xG', 'xG Conceded')
 
-        # Label teams only from '2023/2024' season
         fig1.add_trace(
-            go.Scatter(
-                text=label_df['team_name'],
-                x=label_df['xG'],
-                y=label_df['xG Conceded'],
-                mode='text',
-                showlegend=False,
-                textposition='top center'
-            )
+               go.Scatter(
+                      text=label_df['team_name'],
+                      x=label_df['xG'],
+                      y=label_df['xG Conceded'],
+                      mode='text',
+                      showlegend=False,
+                      textposition='top center'
+               )
         )
-        
+
         # Display the first plot in Streamlit
         st.plotly_chart(fig1)
+
 
         # Second scatter plot
         x_mean = df4['Non-Penalty Goals Scored'].mean()
