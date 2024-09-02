@@ -119,6 +119,9 @@ def team_scatter_plot(df4):
         # Customize the marker color and size for the second plot
         fig2.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
 
+        # Access the trendline and customize its appearance
+        fig2.data[-1].update(line=dict(color='black', dash='dot'))
+
         # Set the plot size and title
         fig2.update_layout(
             width=800,
