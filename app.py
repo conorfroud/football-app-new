@@ -27,13 +27,10 @@ st.set_page_config(layout="wide")
 pd.set_option("display.width", None)  # None means no width limit
        
 def team_scatter_plot(df4):
-
     # Create three columns layout
     col1, col2, col3 = st.columns([1, 5, 1])
 
     with col2:
-        # Sidebar with variable selection (removed the competition filter)
-
         def highlight_color(row):
             if row['team_name'] == 'Stoke City':
                 return '#FF8080'  # light red
@@ -44,7 +41,14 @@ def team_scatter_plot(df4):
             else:
                 return 'grey'
 
-        # Filter dataframe for season '2023/2024'
+        # Adjust opacity based on season
+        def adjust_opacity(row):
+            if row['season_name'] == '2024/2025':
+                return 1.0  # fully opaque
+            else:
+                return 0.3  # more transparent
+
+        # Filter dataframe for season '2024/2025'
         label_df = df4[df4['season_name'] == '2024/2025']
 
         # Function to add mean lines to a figure
@@ -70,10 +74,14 @@ def team_scatter_plot(df4):
         # Create the first scatter plot using Plotly with the entire data
         x_mean = df4['xG'].mean()
         y_mean = df4['xG Conceded'].mean()
-        fig1 = px.scatter(df4, x='xG', y='xG Conceded', hover_data={'team_name': True, 'season_name': True, 'xG': True, 'xG Conceded': True}, trendline="ols")
+        fig1 = px.scatter(df4, x='xG', y='xG Conceded',
+                          hover_data={'team_name': True, 'season_name': True, 'xG': True, 'xG Conceded': True},
+                          trendline="ols")
 
-        # Customize the marker color and size
-        fig1.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
+        # Customize the marker color, size, and opacity
+        fig1.update_traces(marker=dict(size=12,
+                                       color=df4.apply(highlight_color, axis=1),
+                                       opacity=df4.apply(adjust_opacity, axis=1)))
 
         # Access the trendline and customize its appearance
         fig1.data[-1].update(line=dict(color='black', dash='dot'))
@@ -95,7 +103,7 @@ def team_scatter_plot(df4):
         # Add mean lines
         fig1 = add_mean_lines(fig1, x_mean, y_mean, 'xG', 'xG Conceded')
 
-        # Label teams only from '2023/2024' season
+        # Label teams only from '2024/2025' season
         fig1.add_trace(
             go.Scatter(
                 text=label_df['team_name'],
@@ -106,7 +114,7 @@ def team_scatter_plot(df4):
                 textposition='top center'
             )
         )
-        
+
         # Display the first plot in Streamlit
         st.plotly_chart(fig1)
 
