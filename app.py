@@ -318,6 +318,9 @@ def team_scatter_plot(df4):
         # Add mean lines
         fig6 = add_mean_lines(fig6, x_mean, y_mean, 'Passes Per Defensive Action', 'Defensive Distance')
 
+        # Access the trendline and customize its appearance
+        fig6.data[-1].update(line=dict(color='black', dash='dot'))
+
         # Label teams only from '2023/2024' season
         fig6.add_trace(
             go.Scatter(
