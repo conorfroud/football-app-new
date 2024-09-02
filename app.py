@@ -70,7 +70,7 @@ def team_scatter_plot(df4):
         # Create the first scatter plot using Plotly with the entire data
         x_mean = df4['xG'].mean()
         y_mean = df4['xG Conceded'].mean()
-        fig1 = px.scatter(df4, x='xG', y='xG Conceded', hover_data={'team_name': True, 'season_name': True, 'xG': True, 'xG Conceded': True})
+        fig1 = px.scatter(df4, x='xG', y='xG Conceded', hover_data={'team_name': True, 'season_name': True, 'xG': True, 'xG Conceded': True}, trendline="ols")
 
         # Customize the marker color and size
         fig1.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
@@ -111,7 +111,7 @@ def team_scatter_plot(df4):
         x_mean = df4['Non-Penalty Goals Scored'].mean()
         y_mean = df4['Non-Penalty Goals Conceded'].mean()
         fig2 = px.scatter(df4, x='Non-Penalty Goals Scored', y='Non-Penalty Goals Conceded',
-                          hover_data={'team_name': True, 'season_name': True, 'Non-Penalty Goals Scored': True, 'Non-Penalty Goals Conceded': True})
+                          hover_data={'team_name': True, 'season_name': True, 'Non-Penalty Goals Scored': True, 'Non-Penalty Goals Conceded': True}, trendline="ols")
 
         # Customize the marker color and size for the second plot
         fig2.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
@@ -246,7 +246,7 @@ def team_scatter_plot(df4):
         x_mean = df4['Passes Per Possession'].mean()
         y_mean = df4['Pace Towards Goal'].mean()
         fig5 = px.scatter(df4, x='Passes Per Possession', y='Pace Towards Goal',
-                          hover_data={'team_name': True, 'season_name': True, 'Passes Per Possession': True, 'Pace Towards Goal': True})
+                          hover_data={'team_name': True, 'season_name': True, 'Passes Per Possession': True, 'Pace Towards Goal': True}, trendline="ols")
 
         # Customize the marker color and size for the fifth plot
         fig5.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
@@ -287,7 +287,7 @@ def team_scatter_plot(df4):
         x_mean = df4['Passes Per Defensive Action'].mean()
         y_mean = df4['Defensive Distance'].mean()
         fig6 = px.scatter(df4, x='Passes Per Defensive Action', y='Defensive Distance',
-                          hover_data={'team_name': True, 'season_name': True, 'Passes Per Defensive Action': True, 'Defensive Distance': True})
+                          hover_data={'team_name': True, 'season_name': True, 'Passes Per Defensive Action': True, 'Defensive Distance': True}, trendline="ols")
 
         # Customize the marker color and size for the sixth plot
         fig6.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
