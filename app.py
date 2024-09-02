@@ -46,7 +46,7 @@ def team_scatter_plot(df4):
             if row['season_name'] == '2024/2025':
                 return 1.0  # fully opaque
             else:
-                return 0.3  # more transparent
+                return 0.6  # more transparent
 
         # Filter dataframe for season '2024/2025'
         label_df = df4[df4['season_name'] == '2024/2025']
