@@ -46,7 +46,7 @@ def team_scatter_plot(df4):
             if row['season_name'] == '2024/2025':
                 return 1.0  # fully opaque
             else:
-                return 0.6  # more transparent
+                return 0.55  # more transparent
 
         # Filter dataframe for season '2024/2025'
         label_df = df4[df4['season_name'] == '2024/2025']
@@ -168,8 +168,10 @@ def team_scatter_plot(df4):
         fig3 = px.scatter(df4, x='xG', y='Non-Penalty Goals Scored',
                           hover_data={'team_name': True, 'season_name': True, 'xG': True, 'Non-Penalty Goals Scored': True})
 
-        # Customize the marker color and size for the third plot
-        fig3.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
+        # Customize the marker color, size, and opacity
+        fig3.update_traces(marker=dict(size=12,
+                                       color=df4.apply(highlight_color, axis=1),
+                                       opacity=df4.apply(adjust_opacity, axis=1)))
 
         # Set the plot size and title
         fig3.update_layout(
@@ -214,8 +216,11 @@ def team_scatter_plot(df4):
         fig4 = px.scatter(df4, x='xG Conceded', y='Non-Penalty Goals Conceded',
                           hover_data={'team_name': True, 'season_name': True, 'xG Conceded': True, 'Non-Penalty Goals Conceded': True})
 
-        # Customize the marker color and size for the fourth plot
-        fig4.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
+        # Customize the marker color, size, and opacity
+        fig4.update_traces(marker=dict(size=12,
+                                       color=df4.apply(highlight_color, axis=1),
+                                       opacity=df4.apply(adjust_opacity, axis=1)))
+
 
         # Set the plot size and title
         fig4.update_layout(
@@ -264,8 +269,10 @@ def team_scatter_plot(df4):
         fig5 = px.scatter(df4, x='Passes Per Possession', y='Pace Towards Goal',
                           hover_data={'team_name': True, 'season_name': True, 'Passes Per Possession': True, 'Pace Towards Goal': True}, trendline="ols")
 
-        # Customize the marker color and size for the fifth plot
-        fig5.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
+        # Customize the marker color, size, and opacity
+        fig5.update_traces(marker=dict(size=12,
+                                       color=df4.apply(highlight_color, axis=1),
+                                       opacity=df4.apply(adjust_opacity, axis=1)))
 
         # Set the plot size and title
         fig5.update_layout(
@@ -308,8 +315,11 @@ def team_scatter_plot(df4):
         fig6 = px.scatter(df4, x='Passes Per Defensive Action', y='Defensive Distance',
                           hover_data={'team_name': True, 'season_name': True, 'Passes Per Defensive Action': True, 'Defensive Distance': True}, trendline="ols")
 
-        # Customize the marker color and size for the sixth plot
-        fig6.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
+        # Customize the marker color, size, and opacity
+        fig6.update_traces(marker=dict(size=12,
+                                       color=df4.apply(highlight_color, axis=1),
+                                       opacity=df4.apply(adjust_opacity, axis=1)))
+
 
         # Set the plot size and title
         fig6.update_layout(
