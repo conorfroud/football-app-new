@@ -45,7 +45,7 @@ def team_scatter_plot(df4):
                 return 'grey'
 
         # Filter dataframe for season '2023/2024'
-        label_df = df4[df4['season_name'] == '2023/2024']
+        label_df = df4[df4['season_name'] == '2024/2025']
 
         # Function to add mean lines to a figure
         def add_mean_lines(fig, x_mean, y_mean, x_col, y_col):
