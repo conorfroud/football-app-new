@@ -124,8 +124,10 @@ def team_scatter_plot(df4):
         fig2 = px.scatter(df4, x='Non-Penalty Goals Scored', y='Non-Penalty Goals Conceded',
                           hover_data={'team_name': True, 'season_name': True, 'Non-Penalty Goals Scored': True, 'Non-Penalty Goals Conceded': True}, trendline="ols")
 
-        # Customize the marker color and size for the second plot
-        fig2.update_traces(marker=dict(size=12, color=df4.apply(highlight_color, axis=1)))
+        # Customize the marker color, size, and opacity
+        fig2.update_traces(marker=dict(size=12,
+                                       color=df4.apply(highlight_color, axis=1),
+                                       opacity=df4.apply(adjust_opacity, axis=1)))
 
         # Access the trendline and customize its appearance
         fig2.data[-1].update(line=dict(color='black', dash='dot'))
