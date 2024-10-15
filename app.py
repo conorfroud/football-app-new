@@ -495,7 +495,54 @@ def all_team_scatter_plot(df4):
 
         # Display the second plot in Streamlit
         st.plotly_chart(fig2)
-        
+
+        ### Third Scatter Plot: Passes Per Defensive Action vs. Defensive Distance ###
+        x_mean_ppda = df_filtered['Passes Per Defensive Action'].mean()
+        y_mean_dd = df_filtered['Defensive Distance'].mean()
+        fig3 = px.scatter(df_filtered, x='Passes Per Defensive Action', y='Defensive Distance',
+                          hover_data={'team_name': True, 'season_name': True, 'Passes Per Defensive Action': True, 'Defensive Distance': True},
+                          trendline="ols")
+
+        # Customize the marker size, opacity, and color
+        fig3.update_traces(marker=dict(size=12,
+                                       color='grey',  # Set point color to grey
+                                       opacity=df_filtered.apply(adjust_opacity, axis=1)))
+
+        # Access the trendline and customize its appearance
+        fig3.data[-1].update(line=dict(color='black', dash='dot'))
+
+        # Set the plot size, title, and flip the y-axis
+        fig3.update_layout(
+            yaxis=dict(autorange='reversed'),  # Flip the Y-axis if needed
+            width=800,
+            height=600,
+            title={
+                'text': "Pressing",
+                'x': 0.5,
+                'xanchor': 'center',
+                'yanchor': 'top',
+                'font': dict(family="Roboto", size=20, color='black')
+            }
+        )
+
+        # Add mean lines
+        fig3 = add_mean_lines(fig3, x_mean_ppda, y_mean_dd, 'Passes Per Defensive Action', 'Defensive Distance')
+
+        # Label teams only from '2024/2025' season
+        fig3.add_trace(
+            go.Scatter(
+                text=label_df['team_name'],
+                x=label_df['Passes Per Defensive Action'],
+                y=label_df['Defensive Distance'],
+                mode='text',
+                showlegend=False,
+                textposition='top center'
+            )
+        )
+
+        # Display the third plot in Streamlit
+        st.plotly_chart(fig3)
+
 def team_rolling_averages_new(data1):
 
     window = 5  # Define your rolling window size
