@@ -356,22 +356,11 @@ def team_scatter_plot(df4):
         # Display the sixth plot in Streamlit
         st.plotly_chart(fig6)
 
-
 def all_team_scatter_plot(df4):
     # Create three columns layout
     col1, col2, col3 = st.columns([1, 5, 1])
 
     with col2:
-        def highlight_color(row):
-            if row['team_name'] == 'Stoke City':
-                return '#FF8080'  # light red
-            elif row['Promoted?'] == 'Yes':
-                return '#90EE90'  # light green
-            elif row['Relegated?'] == 'Yes':
-                return '#0066cc'  # light blue
-            else:
-                return 'grey'
-
         # Adjust opacity based on season
         def adjust_opacity(row):
             if row['season_name'] == '2024/2025':
@@ -409,9 +398,8 @@ def all_team_scatter_plot(df4):
                           hover_data={'team_name': True, 'season_name': True, 'xG': True, 'xG Conceded': True},
                           trendline="ols")
 
-        # Customize the marker color, size, and opacity
+        # Customize the marker size and opacity (color is no longer customized)
         fig1.update_traces(marker=dict(size=12,
-                                       color=df4.apply(highlight_color, axis=1),
                                        opacity=df4.apply(adjust_opacity, axis=1)))
 
         # Access the trendline and customize its appearance
