@@ -355,6 +355,99 @@ def team_scatter_plot(df4):
 
         # Display the sixth plot in Streamlit
         st.plotly_chart(fig6)
+
+
+def all_team_scatter_plot(df4):
+    # Create three columns layout
+    col1, col2, col3 = st.columns([1, 5, 1])
+
+    with col2:
+        def highlight_color(row):
+            if row['team_name'] == 'Stoke City':
+                return '#FF8080'  # light red
+            elif row['Promoted?'] == 'Yes':
+                return '#90EE90'  # light green
+            elif row['Relegated?'] == 'Yes':
+                return '#0066cc'  # light blue
+            else:
+                return 'grey'
+
+        # Adjust opacity based on season
+        def adjust_opacity(row):
+            if row['season_name'] == '2024/2025':
+                return 1.0  # fully opaque
+            else:
+                return 0.55  # more transparent
+
+        # Filter dataframe for season '2024/2025'
+        label_df = df4[df4['season_name'] == '2024/2025']
+
+        # Function to add mean lines to a figure
+        def add_mean_lines(fig, x_mean, y_mean, x_col, y_col):
+            fig.add_shape(
+                type='line',
+                x0=x_mean,
+                x1=x_mean,
+                y0=df4[y_col].min(),
+                y1=df4[y_col].max(),
+                line=dict(dash='dot', color='black')
+            )
+            fig.add_shape(
+                type='line',
+                x0=df4[x_col].min(),
+                x1=df4[x_col].max(),
+                y0=y_mean,
+                y1=y_mean,
+                line=dict(dash='dot', color='black')
+            )
+            return fig
+
+        # Create the first scatter plot using Plotly with the entire data
+        x_mean = df4['xG'].mean()
+        y_mean = df4['xG Conceded'].mean()
+        fig1 = px.scatter(df4, x='xG', y='xG Conceded',
+                          hover_data={'team_name': True, 'season_name': True, 'xG': True, 'xG Conceded': True},
+                          trendline="ols")
+
+        # Customize the marker color, size, and opacity
+        fig1.update_traces(marker=dict(size=12,
+                                       color=df4.apply(highlight_color, axis=1),
+                                       opacity=df4.apply(adjust_opacity, axis=1)))
+
+        # Access the trendline and customize its appearance
+        fig1.data[-1].update(line=dict(color='black', dash='dot'))
+
+        # Set the plot size, title, and reverse the y-axis for 'xG Conceded'
+        fig1.update_layout(
+            yaxis=dict(autorange='reversed'),
+            width=800,
+            height=600,
+            title={
+                'text': "xG Performance",
+                'x': 0.5,
+                'xanchor': 'center',
+                'yanchor': 'top',
+                'font': dict(family="Roboto", size=20, color='black')
+            }
+        )
+
+        # Add mean lines
+        fig1 = add_mean_lines(fig1, x_mean, y_mean, 'xG', 'xG Conceded')
+
+        # Label teams only from '2024/2025' season
+        fig1.add_trace(
+            go.Scatter(
+                text=label_df['team_name'],
+                x=label_df['xG'],
+                y=label_df['xG Conceded'],
+                mode='text',
+                showlegend=False,
+                textposition='top center'
+            )
+        )
+
+        # Display the first plot in Streamlit
+        st.plotly_chart(fig1)
         
 def team_rolling_averages_new(data1):
 
@@ -498,7 +591,7 @@ data = pd.read_csv("seasonmatchdata2024.csv")
 data1 = pd.read_csv("Stoke City Performance Data - Sheet1.csv")
 
 # Create the navigation menu in the sidebar
-selected_tab = st.sidebar.radio("Navigation", ["Team Data", "Rolling Average Data"])
+selected_tab = st.sidebar.radio("Navigation", ["SCFC Team Data", "Rolling Average Data", "Team Data"])
 
 # Based on the selected tab, display the corresponding content
 if selected_tab == "Stoke Score - Wyscout":
@@ -513,11 +606,13 @@ if selected_tab == "Shortlist XI":
     shortlist_eleven()
 if selected_tab == "Player Database":
     scouting_data()
-if selected_tab == "Team Data":
+if selected_tab == "SCFC Team Data":
     team_scatter_plot(df4)
 if selected_tab == "Rolling Average Data New":
     team_rolling_averages(data)
 if selected_tab == "Rolling Average Data":
     team_rolling_averages_new(data1)
+if selected_tab == "Team Data":
+    all_team_scatter_plot(df4)
 elif selected_tab == "Multi Player Comparison Tab":
     comparison_tab(df)
