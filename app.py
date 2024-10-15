@@ -391,14 +391,14 @@ def all_team_scatter_plot(df4):
             )
             return fig
 
-        # Create the first scatter plot using Plotly with the entire data
-        x_mean = df4['xG'].mean()
-        y_mean = df4['xG Conceded'].mean()
+        ### First Scatter Plot: xG vs. xG Conceded ###
+        x_mean_xg = df4['xG'].mean()
+        y_mean_xg_conceded = df4['xG Conceded'].mean()
         fig1 = px.scatter(df4, x='xG', y='xG Conceded',
                           hover_data={'team_name': True, 'season_name': True, 'xG': True, 'xG Conceded': True},
                           trendline="ols")
 
-        # Customize the marker size and opacity (color is no longer customized)
+        # Customize the marker size and opacity
         fig1.update_traces(marker=dict(size=12,
                                        opacity=df4.apply(adjust_opacity, axis=1)))
 
@@ -420,7 +420,7 @@ def all_team_scatter_plot(df4):
         )
 
         # Add mean lines
-        fig1 = add_mean_lines(fig1, x_mean, y_mean, 'xG', 'xG Conceded')
+        fig1 = add_mean_lines(fig1, x_mean_xg, y_mean_xg_conceded, 'xG', 'xG Conceded')
 
         # Label teams only from '2024/2025' season
         fig1.add_trace(
@@ -436,6 +436,51 @@ def all_team_scatter_plot(df4):
 
         # Display the first plot in Streamlit
         st.plotly_chart(fig1)
+
+        ### Second Scatter Plot: Passes Per Possession vs. Pace Towards Goal ###
+        x_mean_ppp = df4['Passes Per Possession'].mean()
+        y_mean_pace = df4['Pace Towards Goal'].mean()
+        fig2 = px.scatter(df4, x='Passes Per Possession', y='Pace Towards Goal',
+                          hover_data={'team_name': True, 'season_name': True, 'Passes Per Possession': True, 'Pace Towards Goal': True},
+                          trendline="ols")
+
+        # Customize the marker size and opacity
+        fig2.update_traces(marker=dict(size=12,
+                                       opacity=df4.apply(adjust_opacity, axis=1)))
+
+        # Access the trendline and customize its appearance
+        fig2.data[-1].update(line=dict(color='black', dash='dot'))
+
+        # Set the plot size, title
+        fig2.update_layout(
+            width=800,
+            height=600,
+            title={
+                'text': "Passes Per Possession vs. Pace Towards Goal",
+                'x': 0.5,
+                'xanchor': 'center',
+                'yanchor': 'top',
+                'font': dict(family="Roboto", size=20, color='black')
+            }
+        )
+
+        # Add mean lines
+        fig2 = add_mean_lines(fig2, x_mean_ppp, y_mean_pace, 'Passes Per Possession', 'Pace Towards Goal')
+
+        # Label teams only from '2024/2025' season
+        fig2.add_trace(
+            go.Scatter(
+                text=label_df['team_name'],
+                x=label_df['Passes Per Possession'],
+                y=label_df['Pace Towards Goal'],
+                mode='text',
+                showlegend=False,
+                textposition='top center'
+            )
+        )
+
+        # Display the second plot in Streamlit
+        st.plotly_chart(fig2)
         
 def team_rolling_averages_new(data1):
 
