@@ -356,6 +356,10 @@ def team_scatter_plot(df4):
         # Display the sixth plot in Streamlit
         st.plotly_chart(fig6)
 
+import streamlit as st
+import plotly.express as px
+import plotly.graph_objects as go
+
 def all_team_scatter_plot(df4):
     # Sidebar filter for 'competition_name' (single select)
     competitions = df4['competition_name'].unique()
@@ -470,7 +474,7 @@ def all_team_scatter_plot(df4):
             width=800,
             height=600,
             title={
-                'text': "Build-Up Style",
+                'text': "Passes Per Possession vs. Pace Towards Goal",
                 'x': 0.5,
                 'xanchor': 'center',
                 'yanchor': 'top',
@@ -511,13 +515,14 @@ def all_team_scatter_plot(df4):
         # Access the trendline and customize its appearance
         fig3.data[-1].update(line=dict(color='black', dash='dot'))
 
-        # Set the plot size, title, and flip the y-axis
+        # Set the plot size, title, and flip both the x-axis and y-axis
         fig3.update_layout(
-            yaxis=dict(autorange='reversed'),  # Flip the Y-axis if needed
+            xaxis=dict(autorange='reversed'),  # Flip the X-axis
+            yaxis=dict(autorange='reversed'),  # Flip the Y-axis
             width=800,
             height=600,
             title={
-                'text': "Pressing",
+                'text': "Passes Per Defensive Action vs. Defensive Distance",
                 'x': 0.5,
                 'xanchor': 'center',
                 'yanchor': 'top',
