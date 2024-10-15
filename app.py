@@ -356,10 +356,6 @@ def team_scatter_plot(df4):
         # Display the sixth plot in Streamlit
         st.plotly_chart(fig6)
 
-import streamlit as st
-import plotly.express as px
-import plotly.graph_objects as go
-
 def all_team_scatter_plot(df4):
     # Sidebar filter for 'competition_name' (single select)
     competitions = df4['competition_name'].unique()
@@ -474,7 +470,7 @@ def all_team_scatter_plot(df4):
             width=800,
             height=600,
             title={
-                'text': "Passes Per Possession vs. Pace Towards Goal",
+                'text': "Build-Up Style",
                 'x': 0.5,
                 'xanchor': 'center',
                 'yanchor': 'top',
@@ -522,7 +518,7 @@ def all_team_scatter_plot(df4):
             width=800,
             height=600,
             title={
-                'text': "Passes Per Defensive Action vs. Defensive Distance",
+                'text': "Pressing",
                 'x': 0.5,
                 'xanchor': 'center',
                 'yanchor': 'top',
