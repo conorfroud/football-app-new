@@ -400,7 +400,7 @@ def all_team_scatter_plot(df4):
 
         # Customize the marker size, opacity, and color
         fig1.update_traces(marker=dict(size=12,
-                                       color='#7EC0EE',  # Set point color to #7EC0EE
+                                       color='grey',  # Set point color to #7EC0EE
                                        opacity=df4.apply(adjust_opacity, axis=1)))
 
         # Access the trendline and customize its appearance
@@ -447,7 +447,7 @@ def all_team_scatter_plot(df4):
 
         # Customize the marker size, opacity, and color
         fig2.update_traces(marker=dict(size=12,
-                                       color='#7EC0EE',  # Set point color to #7EC0EE
+                                       color='grey',  # Set point color to #7EC0EE
                                        opacity=df4.apply(adjust_opacity, axis=1)))
 
         # Access the trendline and customize its appearance
