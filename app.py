@@ -514,7 +514,6 @@ def all_team_scatter_plot(df4):
         # Set the plot size, title, and flip both the x-axis and y-axis
         fig3.update_layout(
             xaxis=dict(autorange='reversed'),  # Flip the X-axis
-            yaxis=dict(autorange='reversed'),  # Flip the Y-axis
             width=800,
             height=600,
             title={
