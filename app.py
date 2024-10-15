@@ -587,6 +587,7 @@ df = pd.read_csv("belgiumdata.csv")
 df2 = pd.read_csv("championshipscores.csv")
 df3 = pd.read_csv("nonpriorityleaguesdata.csv")
 df4 = pd.read_csv("teamseasondata.csv")
+df5 = pd.read_csv("leaguesteamseasondata.csv")
 data = pd.read_csv("seasonmatchdata2024.csv")
 data1 = pd.read_csv("Stoke City Performance Data - Sheet1.csv")
 
@@ -613,6 +614,6 @@ if selected_tab == "Rolling Average Data New":
 if selected_tab == "Rolling Average Data":
     team_rolling_averages_new(data1)
 if selected_tab == "Team Data":
-    all_team_scatter_plot(df4)
+    all_team_scatter_plot(df5)
 elif selected_tab == "Multi Player Comparison Tab":
     comparison_tab(df)
