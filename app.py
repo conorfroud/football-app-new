@@ -357,16 +357,16 @@ def team_scatter_plot(df4):
         st.plotly_chart(fig6)
 
 def all_team_scatter_plot(df4):
-    # Sidebar filter for 'competition_name'
+    # Sidebar filter for 'competition_name' (single select)
     competitions = df4['competition_name'].unique()
-    selected_competitions = st.sidebar.multiselect(
-        'Select Competitions', 
+    selected_competition = st.sidebar.selectbox(
+        'Select Competition', 
         options=competitions, 
-        default=competitions  # Preselect all competitions by default
+        index=0  # Default to the first competition
     )
 
-    # Filter the dataframe based on selected competitions
-    df_filtered = df4[df4['competition_name'].isin(selected_competitions)]
+    # Filter the dataframe based on selected competition
+    df_filtered = df4[df4['competition_name'] == selected_competition]
 
     # Create three columns layout
     col1, col2, col3 = st.columns([1, 5, 1])
@@ -411,7 +411,7 @@ def all_team_scatter_plot(df4):
 
         # Customize the marker size, opacity, and color
         fig1.update_traces(marker=dict(size=12,
-                                       color='grey',  # Set point color to #7EC0EE
+                                       color='grey',  # Set point color to grey
                                        opacity=df_filtered.apply(adjust_opacity, axis=1)))
 
         # Access the trendline and customize its appearance
@@ -458,7 +458,7 @@ def all_team_scatter_plot(df4):
 
         # Customize the marker size, opacity, and color
         fig2.update_traces(marker=dict(size=12,
-                                       color='grey',  # Set point color to #7EC0EE
+                                       color='grey',  # Set point color to grey
                                        opacity=df_filtered.apply(adjust_opacity, axis=1)))
 
         # Access the trendline and customize its appearance
