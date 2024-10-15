@@ -398,8 +398,9 @@ def all_team_scatter_plot(df4):
                           hover_data={'team_name': True, 'season_name': True, 'xG': True, 'xG Conceded': True},
                           trendline="ols")
 
-        # Customize the marker size and opacity
+        # Customize the marker size, opacity, and color
         fig1.update_traces(marker=dict(size=12,
+                                       color='#7EC0EE',  # Set point color to #7EC0EE
                                        opacity=df4.apply(adjust_opacity, axis=1)))
 
         # Access the trendline and customize its appearance
@@ -444,15 +445,17 @@ def all_team_scatter_plot(df4):
                           hover_data={'team_name': True, 'season_name': True, 'Passes Per Possession': True, 'Pace Towards Goal': True},
                           trendline="ols")
 
-        # Customize the marker size and opacity
+        # Customize the marker size, opacity, and color
         fig2.update_traces(marker=dict(size=12,
+                                       color='#7EC0EE',  # Set point color to #7EC0EE
                                        opacity=df4.apply(adjust_opacity, axis=1)))
 
         # Access the trendline and customize its appearance
         fig2.data[-1].update(line=dict(color='black', dash='dot'))
 
-        # Set the plot size, title
+        # Set the plot size, title, and flip the y-axis
         fig2.update_layout(
+            yaxis=dict(autorange='reversed'),  # Flip the Y-axis
             width=800,
             height=600,
             title={
