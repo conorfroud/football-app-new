@@ -357,6 +357,17 @@ def team_scatter_plot(df4):
         st.plotly_chart(fig6)
 
 def all_team_scatter_plot(df4):
+    # Sidebar filter for 'competition_name'
+    competitions = df4['competition_name'].unique()
+    selected_competitions = st.sidebar.multiselect(
+        'Select Competitions', 
+        options=competitions, 
+        default=competitions  # Preselect all competitions by default
+    )
+
+    # Filter the dataframe based on selected competitions
+    df_filtered = df4[df4['competition_name'].isin(selected_competitions)]
+
     # Create three columns layout
     col1, col2, col3 = st.columns([1, 5, 1])
 
@@ -369,7 +380,7 @@ def all_team_scatter_plot(df4):
                 return 0.55  # more transparent
 
         # Filter dataframe for season '2024/2025'
-        label_df = df4[df4['season_name'] == '2024/2025']
+        label_df = df_filtered[df_filtered['season_name'] == '2024/2025']
 
         # Function to add mean lines to a figure
         def add_mean_lines(fig, x_mean, y_mean, x_col, y_col):
@@ -377,14 +388,14 @@ def all_team_scatter_plot(df4):
                 type='line',
                 x0=x_mean,
                 x1=x_mean,
-                y0=df4[y_col].min(),
-                y1=df4[y_col].max(),
+                y0=df_filtered[y_col].min(),
+                y1=df_filtered[y_col].max(),
                 line=dict(dash='dot', color='black')
             )
             fig.add_shape(
                 type='line',
-                x0=df4[x_col].min(),
-                x1=df4[x_col].max(),
+                x0=df_filtered[x_col].min(),
+                x1=df_filtered[x_col].max(),
                 y0=y_mean,
                 y1=y_mean,
                 line=dict(dash='dot', color='black')
@@ -392,16 +403,16 @@ def all_team_scatter_plot(df4):
             return fig
 
         ### First Scatter Plot: xG vs. xG Conceded ###
-        x_mean_xg = df4['xG'].mean()
-        y_mean_xg_conceded = df4['xG Conceded'].mean()
-        fig1 = px.scatter(df4, x='xG', y='xG Conceded',
+        x_mean_xg = df_filtered['xG'].mean()
+        y_mean_xg_conceded = df_filtered['xG Conceded'].mean()
+        fig1 = px.scatter(df_filtered, x='xG', y='xG Conceded',
                           hover_data={'team_name': True, 'season_name': True, 'xG': True, 'xG Conceded': True},
                           trendline="ols")
 
         # Customize the marker size, opacity, and color
         fig1.update_traces(marker=dict(size=12,
                                        color='grey',  # Set point color to #7EC0EE
-                                       opacity=df4.apply(adjust_opacity, axis=1)))
+                                       opacity=df_filtered.apply(adjust_opacity, axis=1)))
 
         # Access the trendline and customize its appearance
         fig1.data[-1].update(line=dict(color='black', dash='dot'))
@@ -439,16 +450,16 @@ def all_team_scatter_plot(df4):
         st.plotly_chart(fig1)
 
         ### Second Scatter Plot: Passes Per Possession vs. Pace Towards Goal ###
-        x_mean_ppp = df4['Passes Per Possession'].mean()
-        y_mean_pace = df4['Pace Towards Goal'].mean()
-        fig2 = px.scatter(df4, x='Passes Per Possession', y='Pace Towards Goal',
+        x_mean_ppp = df_filtered['Passes Per Possession'].mean()
+        y_mean_pace = df_filtered['Pace Towards Goal'].mean()
+        fig2 = px.scatter(df_filtered, x='Passes Per Possession', y='Pace Towards Goal',
                           hover_data={'team_name': True, 'season_name': True, 'Passes Per Possession': True, 'Pace Towards Goal': True},
                           trendline="ols")
 
         # Customize the marker size, opacity, and color
         fig2.update_traces(marker=dict(size=12,
                                        color='grey',  # Set point color to #7EC0EE
-                                       opacity=df4.apply(adjust_opacity, axis=1)))
+                                       opacity=df_filtered.apply(adjust_opacity, axis=1)))
 
         # Access the trendline and customize its appearance
         fig2.data[-1].update(line=dict(color='black', dash='dot'))
