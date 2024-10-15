@@ -470,7 +470,7 @@ def all_team_scatter_plot(df4):
             width=800,
             height=600,
             title={
-                'text': "Passes Per Possession vs. Pace Towards Goal",
+                'text': "Build-Up Style",
                 'x': 0.5,
                 'xanchor': 'center',
                 'yanchor': 'top',
