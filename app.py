@@ -677,9 +677,6 @@ def team_rolling_averages_new(data1):
             st.pyplot(fig_high_press_shots_against)
     
 # Load the DataFrame
-df = pd.read_csv("belgiumdata.csv")
-df2 = pd.read_csv("championshipscores.csv")
-df3 = pd.read_csv("nonpriorityleaguesdata.csv")
 df4 = pd.read_csv("teamseasondata.csv")
 df5 = pd.read_csv("leaguesteamseasondata.csv")
 data = pd.read_csv("seasonmatchdata2024.csv")
