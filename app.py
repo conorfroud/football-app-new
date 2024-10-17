@@ -373,7 +373,7 @@ def team_scatter_plot(df4):
             width=800,
             height=600,
             title={
-                'text': "Set Pieces Performance",
+                'text': "Set Pieces xG Performance",
                 'x': 0.5,
                 'xanchor': 'center',
                 'yanchor': 'top',
