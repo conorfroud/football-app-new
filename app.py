@@ -357,10 +357,10 @@ def team_scatter_plot(df4):
         st.plotly_chart(fig6)
 
         # Seventh scatter plot
-        x_mean = df4['team_season_sp_xg_pg'].mean()
-        y_mean = df4['team_season_sp_xg_conceded_pg'].mean()
-        fig7 = px.scatter(df4, x='team_season_sp_xg_pg', y='team_season_sp_xg_conceded_pg',
-                          hover_data={'team_name': True, 'season_name': True, 'team_season_sp_xg_pg': True, 'team_season_sp_xg_conceded_pg': True},
+        x_mean = df4['Set Piece xG For'].mean()
+        y_mean = df4['Set Piece xG Conceded'].mean()
+        fig7 = px.scatter(df4, x='Set Piece xG For', y='Set Piece xG Conceded',
+                          hover_data={'team_name': True, 'season_name': True, 'Set Piece xG For': True, 'Set Piece xG Conceded': True},
                           trendline="ols")
 
         # Customize the marker color, size, and opacity
@@ -383,7 +383,7 @@ def team_scatter_plot(df4):
         )
 
         # Add mean lines
-        fig7 = add_mean_lines(fig7, x_mean, y_mean, 'team_season_sp_xg_pg', 'team_season_sp_xg_conceded_pg')
+        fig7 = add_mean_lines(fig7, x_mean, y_mean, 'Set Piece xG For', 'Set Piece xG Conceded')
 
         # Access the trendline and customize its appearance
         fig7.data[-1].update(line=dict(color='black', dash='dot'))
@@ -392,8 +392,8 @@ def team_scatter_plot(df4):
         fig7.add_trace(
             go.Scatter(
                 text=label_df['team_name'],
-                x=label_df['team_season_sp_xg_pg'],
-                y=label_df['team_season_sp_xg_conceded_pg'],
+                x=label_df['Set Piece xG For'],
+                y=label_df['Set Piece xG Conceded'],
                 mode='text',
                 showlegend=False,
                 textposition='top center'
