@@ -356,6 +356,53 @@ def team_scatter_plot(df4):
         # Display the sixth plot in Streamlit
         st.plotly_chart(fig6)
 
+        # Seventh scatter plot
+        x_mean = df4['team_season_sp_xg_pg'].mean()
+        y_mean = df4['team_season_sp_xg_conceded_pg'].mean()
+        fig7 = px.scatter(df4, x='team_season_sp_xg_pg', y='team_season_sp_xg_conceded_pg',
+                          hover_data={'team_name': True, 'season_name': True, 'team_season_sp_xg_pg': True, 'team_season_sp_xg_conceded_pg': True},
+                          trendline="ols")
+
+        # Customize the marker color, size, and opacity
+        fig7.update_traces(marker=dict(size=12,
+                                       color=df4.apply(highlight_color, axis=1),
+                                       opacity=df4.apply(adjust_opacity, axis=1)))
+
+        # Set the plot size and title
+        fig7.update_layout(
+            width=800,
+            height=600,
+            title={
+                'text': "Set Pieces Performance",
+                'x': 0.5,
+                'xanchor': 'center',
+                'yanchor': 'top',
+                'font': dict(family="Roboto", size=20, color='black')
+            },
+            yaxis=dict(autorange="reversed")
+        )
+
+        # Add mean lines
+        fig7 = add_mean_lines(fig7, x_mean, y_mean, 'team_season_sp_xg_pg', 'team_season_sp_xg_conceded_pg')
+
+        # Access the trendline and customize its appearance
+        fig7.data[-1].update(line=dict(color='black', dash='dot'))
+
+        # Label teams only from '2024/2025' season
+        fig7.add_trace(
+            go.Scatter(
+                text=label_df['team_name'],
+                x=label_df['team_season_sp_xg_pg'],
+                y=label_df['team_season_sp_xg_conceded_pg'],
+                mode='text',
+                showlegend=False,
+                textposition='top center'
+            )
+        )
+
+        # Display the seventh plot in Streamlit
+        st.plotly_chart(fig7)
+
 def all_team_scatter_plot(df4):
     # Sidebar filter for 'competition_name' (single select)
     competitions = df4['competition_name'].unique()
