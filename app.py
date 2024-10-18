@@ -726,7 +726,6 @@ def team_rolling_averages_new(data1):
 # Load the DataFrame
 df4 = pd.read_csv("teamseasondata.csv")
 df5 = pd.read_csv("leaguesteamseasondata.csv")
-data = pd.read_csv("seasonmatchdata2024.csv")
 data1 = pd.read_csv("Stoke City Performance Data - Sheet1.csv")
 
 # Create the navigation menu in the sidebar
@@ -737,7 +736,5 @@ if selected_tab == "SCFC Team Data":
     team_scatter_plot(df4)
 if selected_tab == "Rolling Average Data":
     team_rolling_averages_new(data1)
-if selected_tab == "Team Data":
+elif selected_tab == "Team Data":
     all_team_scatter_plot(df5)
-elif selected_tab == "Multi Player Comparison Tab":
-    comparison_tab(df)
