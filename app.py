@@ -733,22 +733,8 @@ data1 = pd.read_csv("Stoke City Performance Data - Sheet1.csv")
 selected_tab = st.sidebar.radio("Navigation", ["SCFC Team Data", "Rolling Average Data", "Team Data"])
 
 # Based on the selected tab, display the corresponding content
-if selected_tab == "Stoke Score - Wyscout":
-    stoke_score_wyscout(df3)
-if selected_tab == "Confidence Scores":
-    display_data()
-if selected_tab == "Player Profile":
-    streamlit_interface(df2)
-if selected_tab == "Report Search":
-    searchable_reports()
-if selected_tab == "Shortlist XI":
-    shortlist_eleven()
-if selected_tab == "Player Database":
-    scouting_data()
 if selected_tab == "SCFC Team Data":
     team_scatter_plot(df4)
-if selected_tab == "Rolling Average Data New":
-    team_rolling_averages(data)
 if selected_tab == "Rolling Average Data":
     team_rolling_averages_new(data1)
 if selected_tab == "Team Data":
