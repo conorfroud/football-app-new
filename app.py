@@ -615,42 +615,44 @@ def team_rolling_averages_new(data1):
         'High Press Shots Against': {'green_threshold': 2, 'orange_threshold': 2.4}  # Out of Possession Metrics
     }
 
-    # Function to create the visualization
-    def create_visualization(df, metric, team, window, green_threshold=1.2, orange_threshold=1.05, flip_colors=False):
-        rolling = df[metric].rolling(window).mean()
+def create_visualization(df, metric, team, window, green_threshold=1.2, orange_threshold=1.05, flip_colors=False):
+       rolling = df[metric].rolling(window).mean()
+       
+       fig, ax = plt.subplots(figsize=(12, 6))  # Already consistent with Plotly
+       fig.set_facecolor('White')
+       ax.patch.set_facecolor('White')
+       
+       ax.spines['right'].set_visible(False)
+       ax.spines['top'].set_visible(False)
+       ax.spines['left'].set_color('#ccc8c8')
+       ax.spines['bottom'].set_color('#ccc8c8')
 
-        fig, ax = plt.subplots(figsize=(12, 6))  # Already consistent with Plotly
-        fig.set_facecolor('White')
-        ax.patch.set_facecolor('White')
+       x_pos = np.arange(len(df))
 
-        ax.spines['right'].set_visible(False)
-        ax.spines['top'].set_visible(False)
-        ax.spines['left'].set_color('#ccc8c8')
-        ax.spines['bottom'].set_color('#ccc8c8')
+       ax.bar(x_pos, df[metric], color='black', alpha=0.75)
+       ax.set_xticks(range(len(df)))
+       ax.set_xticklabels(df['Opponent'], rotation=90, fontsize=12, fontname="Roboto", color='black')  # Font standardization
+       ax.plot(rolling, lw=3, color='red', markersize=5, zorder=10, label=f"{window} match rolling average")
+       ax.grid(ls='dotted', lw=0.5, color='Black', zorder=1, alpha=0.4)
 
-        x_pos = np.arange(len(df))
+       # Add vertical dotted line at x = 75
+       ax.axvline(x=75, color='blue', linestyle='--', lw=2, zorder=5)
 
-        ax.bar(x_pos, df[metric], color='black', alpha=0.75)
-        ax.set_xticks(range(len(df)))
-        ax.set_xticklabels(df['Opponent'], rotation=90, fontsize=12, fontname="Roboto", color='black')  # Font standardization
-        ax.plot(rolling, lw=3, color='red', markersize=5, zorder=10, label=f"{window} match rolling average")
-        ax.grid(ls='dotted', lw=0.5, color='Black', zorder=1, alpha=0.4)
+       ax.set_xlabel('Games', fontsize=12, fontname="Roboto", color='Black')
+       ax.set_ylabel(metric, fontsize=12, fontname="Roboto", color='Black')
 
-        ax.set_xlabel('Games', fontsize=12, fontname="Roboto", color='Black')
-        ax.set_ylabel(metric, fontsize=12, fontname="Roboto", color='Black')
-
-        if flip_colors:
-            ax.axhspan(green_threshold, df[metric].max(), facecolor='red', alpha=0.1)   # Red on top
-            ax.axhspan(orange_threshold, green_threshold, facecolor='orange', alpha=0.1)  # Orange in middle
-            ax.axhspan(0, orange_threshold, facecolor='green', alpha=0.1)  # Green on bottom
-        else:
-            ax.axhspan(green_threshold, df[metric].max(), facecolor='green', alpha=0.1)  # Green on top
-            ax.axhspan(orange_threshold, green_threshold, facecolor='orange', alpha=0.1)  # Orange in middle
-            ax.axhspan(0, orange_threshold, facecolor='red', alpha=0.1)  # Red on bottom
-
-        fig.suptitle(f"{team} {metric} | Trendline", color='Black', family="Roboto", fontsize=18, fontweight="bold", x=0.52, y=0.96)
-
-        return fig
+       if flip_colors:
+              ax.axhspan(green_threshold, df[metric].max(), facecolor='red', alpha=0.1)   # Red on top
+              ax.axhspan(orange_threshold, green_threshold, facecolor='orange', alpha=0.1)  # Orange in middle
+              ax.axhspan(0, orange_threshold, facecolor='green', alpha=0.1)  # Green on bottom
+       else:
+              ax.axhspan(green_threshold, df[metric].max(), facecolor='green', alpha=0.1)  # Green on top
+              ax.axhspan(orange_threshold, green_threshold, facecolor='orange', alpha=0.1)  # Orange in middle
+              ax.axhspan(0, orange_threshold, facecolor='red', alpha=0.1)  # Red on bottom
+              
+       fig.suptitle(f"{team} {metric} | Trendline", color='Black', family="Roboto", fontsize=18, fontweight="bold", x=0.52, y=0.96)
+              
+       return fig
 
     # Sidebar for metric selection
     st.sidebar.title('Select Metric Group')
