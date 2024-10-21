@@ -638,8 +638,10 @@ def team_rolling_averages_new(data1):
         # Set xtick labels without the color parameter
         ax.set_xticklabels(team_names, rotation=90, fontsize=12, fontname="Roboto", color='black')
 
-        # Apply colors based on the result after setting the labels
-        result_colors = ['green' if result == 'Win' else 'red' for result in df['Result']]
+        # Apply colors based on the result ('green' for Win, 'red' for Loss, 'black' for Draw)
+        result_colors = ['green' if result == 'Win' else 'red' if result == 'Loss' else 'black' for result in df['Result']]
+    
+        # Loop through and apply the colors
         for tick_label, color in zip(ax.get_xticklabels(), result_colors):
                tick_label.set_color(color)
     
