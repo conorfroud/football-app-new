@@ -632,18 +632,16 @@ def team_rolling_averages_new(data1):
         ax.bar(x_pos, df[metric], color='black', alpha=0.75)
         ax.set_xticks(range(len(df)))
     
-        # Get the list of team names and result colors
+        # Get the list of team names
         team_names = df['Opponent']
-        result_colors = ['green' if result == 'Win' else 'red' for result in df['Result']]
     
-        # Set xtick labels with corresponding colors
-        ax.set_xticklabels(
-               team_names, 
-               rotation=90, 
-               fontsize=12, 
-               fontname="Roboto", 
-               color=[result_colors[i] for i in range(len(df))]  # Apply color per team based on result
-        )
+        # Set xtick labels without the color parameter
+        ax.set_xticklabels(team_names, rotation=90, fontsize=12, fontname="Roboto", color='black')
+
+        # Apply colors based on the result after setting the labels
+        result_colors = ['green' if result == 'Win' else 'red' for result in df['Result']]
+        for tick_label, color in zip(ax.get_xticklabels(), result_colors):
+               tick_label.set_color(color)
     
         ax.plot(rolling, lw=3, color='red', markersize=5, zorder=10, label=f"{window} match rolling average")
         ax.grid(ls='dotted', lw=0.5, color='Black', zorder=1, alpha=0.4)
@@ -663,7 +661,7 @@ def team_rolling_averages_new(data1):
                ax.axhspan(green_threshold, df[metric].max(), facecolor='green', alpha=0.1)  # Green on top
                ax.axhspan(orange_threshold, green_threshold, facecolor='orange', alpha=0.1)  # Orange in middle
                ax.axhspan(0, orange_threshold, facecolor='red', alpha=0.1)  # Red on bottom
-
+               
         fig.suptitle(f"{team} {metric} | Trendline", color='Black', family="Roboto", fontsize=18, fontweight="bold", x=0.52, y=0.96)
 
         return fig
