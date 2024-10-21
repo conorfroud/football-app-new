@@ -636,7 +636,7 @@ def team_rolling_averages_new(data1):
         ax.plot(rolling, lw=3, color='red', markersize=5, zorder=10, label=f"{window} match rolling average")
         ax.grid(ls='dotted', lw=0.5, color='Black', zorder=1, alpha=0.4)
 
-        ax.axvline(x=75, color='#262626', linestyle='--', lw=2, zorder=5)
+        ax.axvline(x=50, color='#262626', linestyle='--', lw=2, zorder=5)
 
         ax.set_xlabel('Games', fontsize=12, fontname="Roboto", color='Black')
         ax.set_ylabel(metric, fontsize=12, fontname="Roboto", color='Black')
