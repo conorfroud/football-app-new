@@ -616,114 +616,114 @@ def team_rolling_averages_new(data1):
     }
 
 def create_visualization(df, metric, team, window, green_threshold=1.2, orange_threshold=1.05, flip_colors=False):
-       rolling = df[metric].rolling(window).mean()
-       
-       fig, ax = plt.subplots(figsize=(12, 6))  # Already consistent with Plotly
-       fig.set_facecolor('White')
-       ax.patch.set_facecolor('White')
-       
-       ax.spines['right'].set_visible(False)
-       ax.spines['top'].set_visible(False)
-       ax.spines['left'].set_color('#ccc8c8')
-       ax.spines['bottom'].set_color('#ccc8c8')
+    rolling = df[metric].rolling(window).mean()
 
-       x_pos = np.arange(len(df))
+    fig, ax = plt.subplots(figsize=(12, 6))  # Already consistent with Plotly
+    fig.set_facecolor('White')
+    ax.patch.set_facecolor('White')
 
-       ax.bar(x_pos, df[metric], color='black', alpha=0.75)
-       ax.set_xticks(range(len(df)))
-       ax.set_xticklabels(df['Opponent'], rotation=90, fontsize=12, fontname="Roboto", color='black')  # Font standardization
-       ax.plot(rolling, lw=3, color='red', markersize=5, zorder=10, label=f"{window} match rolling average")
-       ax.grid(ls='dotted', lw=0.5, color='Black', zorder=1, alpha=0.4)
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    ax.spines['left'].set_color('#ccc8c8')
+    ax.spines['bottom'].set_color('#ccc8c8')
 
-       # Add vertical dotted line at x = 75
-       ax.axvline(x=75, color='blue', linestyle='--', lw=2, zorder=5)
+    x_pos = np.arange(len(df))
 
-       ax.set_xlabel('Games', fontsize=12, fontname="Roboto", color='Black')
-       ax.set_ylabel(metric, fontsize=12, fontname="Roboto", color='Black')
+    ax.bar(x_pos, df[metric], color='black', alpha=0.75)
+    ax.set_xticks(range(len(df)))
+    ax.set_xticklabels(df['Opponent'], rotation=90, fontsize=12, fontname="Roboto", color='black')  # Font standardization
+    ax.plot(rolling, lw=3, color='red', markersize=5, zorder=10, label=f"{window} match rolling average")
+    ax.grid(ls='dotted', lw=0.5, color='Black', zorder=1, alpha=0.4)
 
-       if flip_colors:
-              ax.axhspan(green_threshold, df[metric].max(), facecolor='red', alpha=0.1)   # Red on top
-              ax.axhspan(orange_threshold, green_threshold, facecolor='orange', alpha=0.1)  # Orange in middle
-              ax.axhspan(0, orange_threshold, facecolor='green', alpha=0.1)  # Green on bottom
-       else:
-              ax.axhspan(green_threshold, df[metric].max(), facecolor='green', alpha=0.1)  # Green on top
-              ax.axhspan(orange_threshold, green_threshold, facecolor='orange', alpha=0.1)  # Orange in middle
-              ax.axhspan(0, orange_threshold, facecolor='red', alpha=0.1)  # Red on bottom
-              
-       fig.suptitle(f"{team} {metric} | Trendline", color='Black', family="Roboto", fontsize=18, fontweight="bold", x=0.52, y=0.96)
-              
-       return fig
+    # Add vertical dotted line at x = 75
+    ax.axvline(x=75, color='blue', linestyle='--', lw=2, zorder=5)
 
-    # Sidebar for metric selection
-    st.sidebar.title('Select Metric Group')
-    metric_group = st.sidebar.selectbox(
-        'Which group of metrics would you like to view?',
-        ('Attacking Metrics', 'Defensive Metrics', 'In Possession Metrics', 'Out of Possession Metrics')  # Added 'Out of Possession Metrics'
-    )
+    ax.set_xlabel('Games', fontsize=12, fontname="Roboto", color='Black')
+    ax.set_ylabel(metric, fontsize=12, fontname="Roboto", color='Black')
 
-    # Create three columns layout
-    col1, col2, col3 = st.columns([1, 5, 1])
+    if flip_colors:
+        ax.axhspan(green_threshold, df[metric].max(), facecolor='red', alpha=0.1)   # Red on top
+        ax.axhspan(orange_threshold, green_threshold, facecolor='orange', alpha=0.1)  # Orange in middle
+        ax.axhspan(0, orange_threshold, facecolor='green', alpha=0.1)  # Green on bottom
+    else:
+        ax.axhspan(green_threshold, df[metric].max(), facecolor='green', alpha=0.1)  # Green on top
+        ax.axhspan(orange_threshold, green_threshold, facecolor='orange', alpha=0.1)  # Orange in middle
+        ax.axhspan(0, orange_threshold, facecolor='red', alpha=0.1)  # Red on bottom
 
-    with col2:
-        # Plot Attacking Metrics
-        if metric_group == 'Attacking Metrics':
-            
-            fig_xg_for = create_visualization(data1, 'xG For', team, window, **thresholds['xG For'])
-            st.pyplot(fig_xg_for)
+    fig.suptitle(f"{team} {metric} | Trendline", color='Black', family="Roboto", fontsize=18, fontweight="bold", x=0.52, y=0.96)
 
-            fig_xg_per_shot_for = create_visualization(data1, 'xG Per Shot For', team, window, **thresholds['xG Per Shot For'])
-            st.pyplot(fig_xg_per_shot_for)
+    return fig
 
-            fig_shots_for = create_visualization(data1, 'Shots For', team, window, **thresholds['Shots For'])
-            st.pyplot(fig_shots_for)
+# Sidebar for metric selection
+st.sidebar.title('Select Metric Group')
+metric_group = st.sidebar.selectbox(
+    'Which group of metrics would you like to view?',
+    ('Attacking Metrics', 'Defensive Metrics', 'In Possession Metrics', 'Out of Possession Metrics')  # Added 'Out of Possession Metrics'
+)
 
-            fig_clear_shots_for = create_visualization(data1, 'Clear Shots For', team, window, **thresholds['Clear Shots For'])
-            st.pyplot(fig_clear_shots_for)
+# Create three columns layout
+col1, col2, col3 = st.columns([1, 5, 1])
 
-        # Plot Defensive Metrics
-        elif metric_group == 'Defensive Metrics':
-            
-            fig_xg_against = create_visualization(data1, 'xG Against', team, window, **thresholds['xG Against'], flip_colors=True)
-            st.pyplot(fig_xg_against)
+with col2:
+    # Plot Attacking Metrics
+    if metric_group == 'Attacking Metrics':
 
-            fig_xg_per_shot_against = create_visualization(data1, 'xG Per Shot Against', team, window, **thresholds['xG Per Shot Against'], flip_colors=True)
-            st.pyplot(fig_xg_per_shot_against)
+        fig_xg_for = create_visualization(data1, 'xG For', team, window, **thresholds['xG For'])
+        st.pyplot(fig_xg_for)
 
-            fig_shots_against = create_visualization(data1, 'Shots Against', team, window, **thresholds['Shots Against'], flip_colors=True)
-            st.pyplot(fig_shots_against)
+        fig_xg_per_shot_for = create_visualization(data1, 'xG Per Shot For', team, window, **thresholds['xG Per Shot For'])
+        st.pyplot(fig_xg_per_shot_for)
 
-            fig_clear_shots_against = create_visualization(data1, 'Clear Shots Against', team, window, **thresholds['Clear Shots Against'], flip_colors=True)
-            st.pyplot(fig_clear_shots_against)
+        fig_shots_for = create_visualization(data1, 'Shots For', team, window, **thresholds['Shots For'])
+        st.pyplot(fig_shots_for)
 
-        # Plot In Possession Metrics
-        elif metric_group == 'In Possession Metrics':  # New section for In Possession Metrics
+        fig_clear_shots_for = create_visualization(data1, 'Clear Shots For', team, window, **thresholds['Clear Shots For'])
+        st.pyplot(fig_clear_shots_for)
 
-            fig_deep_progressions_for = create_visualization(data1, 'Deep Progressions For', team, window, **thresholds['Deep Progressions For'])
-            st.pyplot(fig_deep_progressions_for)
+    # Plot Defensive Metrics
+    elif metric_group == 'Defensive Metrics':
 
-            fig_deep_completions_for = create_visualization(data1, 'Deep Completions For', team, window, **thresholds['Deep Completions For'])
-            st.pyplot(fig_deep_completions_for)
+        fig_xg_against = create_visualization(data1, 'xG Against', team, window, **thresholds['xG Against'], flip_colors=True)
+        st.pyplot(fig_xg_against)
 
-            fig_pass_obv_for = create_visualization(data1, 'Pass OBV For', team, window, **thresholds['Pass OBV For'])
-            st.pyplot(fig_pass_obv_for)
+        fig_xg_per_shot_against = create_visualization(data1, 'xG Per Shot Against', team, window, **thresholds['xG Per Shot Against'], flip_colors=True)
+        st.pyplot(fig_xg_per_shot_against)
 
-            fig_box_cross_pct = create_visualization(data1, 'Box Cross %', team, window, **thresholds['Box Cross %'], flip_colors=True)
-            st.pyplot(fig_box_cross_pct)
+        fig_shots_against = create_visualization(data1, 'Shots Against', team, window, **thresholds['Shots Against'], flip_colors=True)
+        st.pyplot(fig_shots_against)
 
-        # Plot Out of Possession Metrics
-        elif metric_group == 'Out of Possession Metrics':  # New section for Out of Possession Metrics
+        fig_clear_shots_against = create_visualization(data1, 'Clear Shots Against', team, window, **thresholds['Clear Shots Against'], flip_colors=True)
+        st.pyplot(fig_clear_shots_against)
 
-            fig_deep_progressions_against = create_visualization(data1, 'Deep Progressions Against', team, window, **thresholds['Deep Progressions Against'], flip_colors=True)
-            st.pyplot(fig_deep_progressions_against)
+    # Plot In Possession Metrics
+    elif metric_group == 'In Possession Metrics':  # New section for In Possession Metrics
 
-            fig_pressures_opp_half = create_visualization(data1, '% of Pressures Opp Half', team, window, **thresholds['% of Pressures Opp Half'], flip_colors=False)
-            st.pyplot(fig_pressures_opp_half)
+        fig_deep_progressions_for = create_visualization(data1, 'Deep Progressions For', team, window, **thresholds['Deep Progressions For'])
+        st.pyplot(fig_deep_progressions_for)
 
-            fig_defensive_distance = create_visualization(data1, 'Defensive Distance', team, window, **thresholds['Defensive Distance'], flip_colors=False)
-            st.pyplot(fig_defensive_distance)
+        fig_deep_completions_for = create_visualization(data1, 'Deep Completions For', team, window, **thresholds['Deep Completions For'])
+        st.pyplot(fig_deep_completions_for)
 
-            fig_high_press_shots_against = create_visualization(data1, 'High Press Shots Against', team, window, **thresholds['High Press Shots Against'], flip_colors=True)
-            st.pyplot(fig_high_press_shots_against)
+        fig_pass_obv_for = create_visualization(data1, 'Pass OBV For', team, window, **thresholds['Pass OBV For'])
+        st.pyplot(fig_pass_obv_for)
+
+        fig_box_cross_pct = create_visualization(data1, 'Box Cross %', team, window, **thresholds['Box Cross %'], flip_colors=True)
+        st.pyplot(fig_box_cross_pct)
+
+    # Plot Out of Possession Metrics
+    elif metric_group == 'Out of Possession Metrics':  # New section for Out of Possession Metrics
+
+        fig_deep_progressions_against = create_visualization(data1, 'Deep Progressions Against', team, window, **thresholds['Deep Progressions Against'], flip_colors=True)
+        st.pyplot(fig_deep_progressions_against)
+
+        fig_pressures_opp_half = create_visualization(data1, '% of Pressures Opp Half', team, window, **thresholds['% of Pressures Opp Half'], flip_colors=False)
+        st.pyplot(fig_pressures_opp_half)
+
+        fig_defensive_distance = create_visualization(data1, 'Defensive Distance', team, window, **thresholds['Defensive Distance'], flip_colors=False)
+        st.pyplot(fig_defensive_distance)
+
+        fig_high_press_shots_against = create_visualization(data1, 'High Press Shots Against', team, window, **thresholds['High Press Shots Against'], flip_colors=True)
+        st.pyplot(fig_high_press_shots_against)
     
 # Load the DataFrame
 df4 = pd.read_csv("teamseasondata.csv")
